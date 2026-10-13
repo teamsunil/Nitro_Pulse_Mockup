@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nitro Pulse | Maybach-Inspired Luxury Sprinter Van Rentals in Orange County &amp; Los Angeles</title>
+<meta name="description" content="Chauffeur-driven, Maybach-inspired luxury Sprinter vans in Los Angeles, San Diego and Orange County. Website redesign concept.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   NITRO PULSE — design tokens
+   ========================================================= */
+:root{
+  /* light theme: names kept for structure; --white = primary ink */
+  --midnight:#f2f3f5;      /* page background */
+  --graphite:#ffffff;      /* raised surfaces */
+  --metal:#e7e9ed;
+  --metal-2:#cfd4db;
+  --line:rgba(150,116,62,.3);
+  --hair:rgba(18,21,27,.1);
+  --gold:#a8864f;          /* lines + icons */
+  --gold-fill:#c9a96e;     /* button fill */
+  --gold-bright:#7d5f30;   /* hover / text accent */
+  --gold-ink:#86673a;      /* accent text on light */
+  --on-gold:#12151b;
+  --white:#12151b;         /* primary text */
+  --silver:#4f5561;
+  --silver-dim:#7b818c;
+  --danger:#c2410c;
+
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Manrope","Helvetica Neue",Arial,sans-serif;
+
+  --wrap:1240px;
+  --gutter:clamp(20px,4vw,48px);
+  --header-h:76px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + env(safe-area-inset-top,0px))}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+body{
+  margin:0;background:var(--midnight);color:var(--white);
+  font-family:var(--body);font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+body.menu-open{overflow:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.skip{position:absolute;left:12px;top:-60px;z-index:200;background:var(--gold-fill);color:var(--on-gold);padding:10px 16px;font-weight:700;text-decoration:none}
+.skip:focus{top:12px}
+
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+
+/* Type */
+.display{font-family:var(--display);font-stretch:118%;font-weight:700;letter-spacing:-.01em;line-height:1.04;margin:0}
+.h2{font-family:var(--display);font-stretch:116%;font-weight:700;font-size:clamp(2rem,4.4vw,3.6rem);line-height:1.02;letter-spacing:-.015em;margin:0}
+.h3{font-family:var(--display);font-stretch:108%;font-weight:500;font-size:clamp(1.2rem,2vw,1.6rem);line-height:1.2;margin:0;color:var(--silver)}
+.kicker{display:inline-flex;align-items:center;gap:12px;font-family:var(--body);font-weight:600;font-size:.86rem;letter-spacing:.06em;color:var(--gold-ink);margin:0 0 22px}
+.kicker::before{content:"";width:28px;height:1px;background:var(--gold)}
+.lead{color:var(--silver);font-size:1.08rem;max-width:58ch;margin:0}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:52px;padding:0 26px;border-radius:2px;
+  font-family:var(--body);font-weight:700;font-size:.95rem;letter-spacing:.01em;
+  text-decoration:none;cursor:pointer;border:1px solid transparent;
+  transition:background .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease),transform .25s var(--ease);
+}
+.btn-gold{background:var(--gold-fill);color:var(--on-gold)}
+.btn-gold:hover{background:#b8955a}
+.btn-ghost{border-color:rgba(18,21,27,.28);color:var(--white);background:rgba(255,255,255,.55);backdrop-filter:blur(6px)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold-bright)}
+.btn:active{transform:translateY(1px)}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* =========================================================
+   Logo
+   ========================================================= */
+.logo{display:inline-flex;align-items:center;gap:12px;text-decoration:none;color:var(--white)}
+.logo-mark{width:38px;height:38px;flex:none}
+.logo-word{display:flex;flex-direction:column;line-height:1}
+.logo-word b{font-family:var(--display);font-stretch:125%;font-weight:800;font-size:1.02rem;letter-spacing:.16em}
+.logo-word small{font-family:var(--display);font-stretch:125%;font-weight:500;font-size:.56rem;letter-spacing:.42em;color:var(--gold);margin-top:6px}
+
+/* =========================================================
+   Header
+   ========================================================= */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding-top:env(safe-area-inset-top,0px);
+  transition:background .35s var(--ease),border-color .35s var(--ease);
+  border-bottom:1px solid transparent;
+}
+.site-header.scrolled{background:rgba(255,255,255,.9);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--hair)}
+.nav-row{display:flex;align-items:center;justify-content:space-between;height:var(--header-h);gap:24px}
+.nav{display:flex;align-items:center;gap:6px}
+.nav-list{display:flex;align-items:center;gap:4px;list-style:none;margin:0;padding:0}
+.nav-list > li{position:relative}
+.nav-link{
+  display:inline-flex;align-items:center;gap:6px;padding:10px 14px;
+  font-size:.93rem;font-weight:500;color:var(--silver);text-decoration:none;
+  background:none;border:0;cursor:pointer;transition:color .2s;
+}
+.nav-link:hover,.nav-link.active{color:var(--white)}
+.nav-link.active{box-shadow:inset 0 -1px 0 var(--gold)}
+.nav-link svg{width:12px;height:12px;transition:transform .25s var(--ease)}
+.has-sub[data-open="true"] .nav-link svg{transform:rotate(180deg)}
+.submenu{
+  position:absolute;top:calc(100% + 8px);left:0;min-width:230px;
+  list-style:none;margin:0;padding:8px;background:var(--graphite);
+  border:1px solid var(--hair);border-top:1px solid var(--gold);
+  opacity:0;visibility:hidden;transform:translateY(-6px);
+  transition:opacity .2s,transform .2s var(--ease),visibility .2s;
+}
+.has-sub[data-open="true"] .submenu{opacity:1;visibility:visible;transform:none}
+.submenu a{display:block;padding:12px 14px;color:var(--silver);text-decoration:none;font-size:.93rem}
+.submenu a:hover{color:var(--white);background:var(--metal)}
+.nav-phone{display:inline-flex;align-items:center;gap:8px;color:var(--white);text-decoration:none;font-weight:600;font-size:.93rem;padding:10px 14px;margin-left:6px;border-left:1px solid var(--hair)}
+.nav-phone svg{width:16px;height:16px;color:var(--gold)}
+.nav-phone:hover{color:var(--gold-bright)}
+.nav .btn{min-height:44px;padding:0 20px;margin-left:8px}
+
+.burger{display:none;width:48px;height:48px;background:none;border:1px solid var(--hair);border-radius:2px;cursor:pointer;align-items:center;justify-content:center}
+.burger span{display:block;width:20px;height:1.5px;background:var(--white);position:relative}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:20px;height:1.5px;background:var(--white)}
+.burger span::before{top:-6px}.burger span::after{top:6px;width:13px}
+
+/* Mobile menu */
+.mobile-menu{
+  position:fixed;inset:0;z-index:150;background:var(--midnight);
+  display:flex;flex-direction:column;
+  padding:calc(env(safe-area-inset-top,0px)) 0 calc(env(safe-area-inset-bottom,0px) + 24px);
+  opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;
+}
+.mobile-menu.open{opacity:1;visibility:visible}
+.mobile-menu .nav-row{padding:0 var(--gutter);border-bottom:1px solid var(--hair)}
+.close-btn{width:48px;height:48px;background:none;border:1px solid var(--hair);border-radius:2px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.close-btn svg{width:20px;height:20px}
+.m-list{list-style:none;margin:0;padding:12px var(--gutter);overflow-y:auto;flex:1}
+.m-list > li{border-bottom:1px solid var(--hair)}
+.m-link{display:flex;align-items:center;justify-content:space-between;width:100%;padding:20px 0;font-family:var(--display);font-stretch:115%;font-weight:600;font-size:1.5rem;color:var(--white);text-decoration:none;background:none;border:0;cursor:pointer;text-align:left}
+.m-link svg{width:18px;height:18px;color:var(--gold);transition:transform .25s var(--ease)}
+.m-link[aria-expanded="true"] svg{transform:rotate(180deg)}
+.m-sub{list-style:none;margin:0;padding:0 0 16px;display:none}
+.m-sub.open{display:block}
+.m-sub a{display:block;padding:12px 0 12px 18px;border-left:1px solid var(--gold);color:var(--silver);text-decoration:none;font-size:1.05rem}
+.m-foot{padding:0 var(--gutter);display:grid;gap:12px}
+.m-foot .btn{width:100%}
+
+/* =========================================================
+   Image frames + graceful fallback
+   ========================================================= */
+.frame{position:relative;overflow:hidden;background:
+  radial-gradient(120% 80% at 70% 20%,rgba(205,178,135,.12),transparent 60%),
+  linear-gradient(160deg,var(--metal) 0%,var(--graphite) 55%,var(--midnight) 100%)}
+.frame img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.frame.img-failed img{display:none}
+.frame.img-failed{background:
+  radial-gradient(70% 55% at 50% 38%,rgba(201,169,110,.28),transparent 70%),
+  radial-gradient(60% 18% at 50% 92%,rgba(18,21,27,.14),transparent 70%),
+  linear-gradient(180deg,#eef0f3 0%,#e2e5ea 62%,#d6dae1 100%)}
+.van-art{position:absolute;left:50%;top:54%;width:84%;max-width:760px;transform:translate(-50%,-50%);display:none;pointer-events:none}
+.frame.img-failed > .van-art{display:block}
+.hero-bg .van-art{left:auto;right:3%;top:auto;bottom:16%;width:min(54%,820px);transform:none}
+.dlg-thumbs .van-art{width:92%}
+@media (max-width:640px){.hero-bg .van-art{right:50%;transform:translateX(50%);width:92%;bottom:6%;opacity:.35}}
+
+/* =========================================================
+   Hero
+   ========================================================= */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;isolation:isolate;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:-2}
+.hero-bg.frame{background:
+  radial-gradient(60% 70% at 75% 40%,rgba(201,169,110,.22),transparent 70%),
+  linear-gradient(180deg,#e9ebef,#f2f3f5)}
+.hero-bg img{object-position:62% center;animation:heroIn 2.4s var(--ease) both}
+@keyframes heroIn{from{transform:scale(1.08);opacity:0}to{transform:scale(1);opacity:1}}
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:
+    linear-gradient(90deg,rgba(242,243,245,.97) 0%,rgba(242,243,245,.9) 36%,rgba(242,243,245,.35) 64%,rgba(242,243,245,0) 100%),
+    linear-gradient(0deg,var(--midnight) 0%,rgba(242,243,245,0) 30%),
+    linear-gradient(180deg,rgba(242,243,245,.75) 0%,rgba(242,243,245,0) 20%);
+}
+.hero-inner{width:100%;padding-top:calc(var(--header-h) + 72px);padding-bottom:clamp(40px,6vw,72px)}
+.locator{display:inline-flex;align-items:center;gap:10px;font-size:.88rem;font-weight:600;color:var(--silver);margin-bottom:28px}
+.locator .dot{position:relative;width:9px;height:9px;border-radius:50%;background:var(--gold-fill)}
+.locator .dot::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:1px solid var(--gold);animation:ping 2.6s var(--ease) infinite}
+@keyframes ping{0%{transform:scale(.4);opacity:.9}80%,100%{transform:scale(1.6);opacity:0}}
+.hero h1{font-size:clamp(2.1rem,4.9vw,4.35rem);max-width:17ch}
+.pulse-line{display:block;width:min(100%,640px);height:46px;margin:30px 0 26px;color:var(--gold)}
+.pulse-line path{stroke-dasharray:1000;stroke-dashoffset:1000;animation:draw 2.2s .5s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hero p.lead{font-size:clamp(1.02rem,1.4vw,1.18rem);color:var(--silver);max-width:52ch}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.hero-meta{display:flex;flex-wrap:wrap;gap:12px 32px;margin-top:56px;padding-top:22px;border-top:1px solid var(--hair);font-size:.9rem;color:var(--silver)}
+.hero-meta a{color:var(--white);text-decoration:none;font-weight:600}
+.hero-meta a:hover{color:var(--gold-bright)}
+
+/* =========================================================
+   Trust strip
+   ========================================================= */
+.trust{background:var(--graphite);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.trust .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:26px;padding-bottom:26px;flex-wrap:wrap}
+.trust-l{display:flex;align-items:center;gap:22px}
+.trust-avatars{height:44px;width:auto}
+.trust-avatars.img-failed{display:none}
+.trust h2{font-family:var(--display);font-stretch:112%;font-weight:600;font-size:clamp(1.1rem,2vw,1.45rem);margin:0;letter-spacing:-.005em}
+.text-link{display:inline-flex;align-items:center;gap:10px;color:var(--gold-ink);font-weight:700;text-decoration:none;font-size:.95rem;padding:8px 0;border-bottom:1px solid var(--line);transition:border-color .2s,color .2s}
+.text-link:hover{color:var(--gold-bright);border-color:var(--gold)}
+
+/* =========================================================
+   Sections
+   ========================================================= */
+.section{padding:clamp(80px,11vw,150px) 0}
+.section-tight{padding:clamp(56px,7vw,96px) 0}
+
+/* About / intro */
+.intro{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(36px,6vw,96px);align-items:center}
+.intro .frame{aspect-ratio:4/5;border-radius:2px}
+.intro-copy .h2{font-size:clamp(2.6rem,6.4vw,5.6rem);margin-bottom:18px}
+.intro-copy .h3{margin-bottom:22px}
+.intro-figure{position:relative}
+
+/* Services grid */
+.services{margin-top:clamp(64px,8vw,110px);display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--hair);border-left:1px solid var(--hair)}
+.service{
+  position:relative;padding:38px 32px 40px;border-right:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  background:transparent;transition:background .35s var(--ease);
+}
+.service::before{content:"";position:absolute;left:0;top:-1px;height:1px;width:0;background:var(--gold);transition:width .45s var(--ease)}
+.service:hover{background:linear-gradient(180deg,rgba(205,178,135,.06),transparent 70%)}
+.service:hover::before{width:100%}
+.service svg{width:34px;height:34px;color:var(--gold);margin-bottom:40px}
+.service h3{font-family:var(--display);font-stretch:112%;font-weight:600;font-size:1.3rem;margin:0 0 6px}
+.service p{margin:0;color:var(--silver)}
+
+/* Benefits */
+.benefits{background:linear-gradient(180deg,var(--graphite),var(--midnight))}
+.benefit-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.benefit{display:flex;gap:20px;align-items:flex-start;padding:10px 36px}
+.benefit + .benefit{border-left:1px solid var(--line)}
+.benefit:first-child{padding-left:0}
+.benefit svg{width:30px;height:30px;color:var(--gold);flex:none;margin-top:2px}
+.benefit h3{margin:0;font-family:var(--display);font-stretch:110%;font-weight:500;font-size:clamp(1.05rem,1.5vw,1.25rem);line-height:1.35}
+
+/* Journey */
+.journey-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:clamp(56px,7vw,90px)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);position:relative;counter-reset:s}
+.steps::before{content:"";position:absolute;left:0;right:0;top:27px;height:1px;background:linear-gradient(90deg,var(--gold),rgba(205,178,135,.15))}
+.step{position:relative;padding-right:28px}
+.step-num{
+  position:relative;z-index:1;display:flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:50%;
+  background:var(--midnight);border:1px solid var(--gold);color:var(--gold);
+  font-family:var(--display);font-stretch:120%;font-weight:700;font-size:1.05rem;margin-bottom:30px;
+  transition:background .3s,color .3s;
+}
+.step:hover .step-num{background:var(--gold-fill);color:var(--on-gold)}
+.step h3{font-family:var(--display);font-stretch:112%;font-weight:600;font-size:1.3rem;margin:0 0 8px}
+.step p{margin:0;color:var(--silver);max-width:28ch}
+
+/* Fleet */
+.fleet-head{display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:end;margin-bottom:clamp(56px,7vw,96px)}
+.fleet-head .h3{margin-top:14px}
+.fleet-head-r p{color:var(--silver);margin:0 0 26px;max-width:42ch}
+.vehicle{display:grid;grid-template-columns:1.35fr 1fr;gap:0;border:1px solid var(--hair);background:var(--graphite);box-shadow:0 30px 60px -40px rgba(18,21,27,.35);position:relative;overflow:hidden}
+.vehicle + .vehicle{margin-top:clamp(28px,4vw,48px)}
+.vehicle.reverse{grid-template-columns:1fr 1.35fr}
+.vehicle.reverse .v-media{order:2}
+.vehicle.party{background:
+  radial-gradient(70% 90% at 85% 50%,rgba(140,92,190,.1),transparent 70%),
+  radial-gradient(50% 60% at 60% 100%,rgba(205,178,135,.08),transparent 70%),
+  var(--graphite)}
+.v-media{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:4px;min-height:520px}
+.v-media .frame:first-child{grid-row:1 / 3}
+.v-media .frame:hover img{transform:scale(1.04)}
+.v-body{padding:clamp(32px,4vw,56px);display:flex;flex-direction:column;justify-content:center}
+.v-tag{display:inline-flex;align-items:center;gap:10px;font-weight:600;font-size:.86rem;color:var(--gold-ink);margin-bottom:18px}
+.v-tag svg{width:20px;height:20px}
+.v-body h3{font-family:var(--display);font-stretch:120%;font-weight:700;font-size:clamp(1.9rem,3.4vw,2.9rem);line-height:1;margin:0 0 20px;letter-spacing:-.01em}
+.v-body > p{color:var(--silver);margin:0 0 28px;font-size:.98rem}
+.v-body > p a{color:var(--white);text-decoration-color:var(--gold);text-underline-offset:3px}
+.v-body strong{color:var(--white);font-weight:600}
+.features{list-style:none;margin:0 0 34px;padding:0;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--hair)}
+.features li{display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--hair);font-weight:600;font-size:.95rem}
+.features li:nth-child(odd){padding-right:14px}
+.features li svg{width:16px;height:16px;color:var(--gold);flex:none}
+.v-actions{display:flex;flex-wrap:wrap;gap:12px}
+
+/* Testimonials */
+.testi-head{max-width:760px;margin-bottom:56px}
+.testi-head .h3{margin:14px 0 20px}
+.testi-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:24px;align-items:stretch}
+.quote-card{position:relative;padding:clamp(32px,4vw,52px);background:var(--graphite);border:1px solid var(--hair)}
+.quote-card .qmark{position:absolute;top:18px;right:30px;font-family:Georgia,serif;font-size:8rem;line-height:1;color:var(--gold);opacity:.22}
+.placeholder-badge{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:700;color:var(--on-gold);background:var(--gold-fill);padding:6px 12px;border-radius:2px;margin-bottom:26px}
+.quote-card blockquote{margin:0 0 30px;font-family:var(--display);font-stretch:106%;font-weight:400;font-size:clamp(1.25rem,2.2vw,1.7rem);line-height:1.35;color:var(--silver-dim);font-style:italic}
+.rider{display:flex;align-items:center;gap:14px}
+.rider-avatar{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--gold)}
+.rider-avatar svg{width:22px;height:22px}
+.rider b{display:block;font-weight:700}
+.rider span{color:var(--silver);font-size:.9rem}
+.quote-note{margin:26px 0 0;padding-top:18px;border-top:1px dashed var(--line);font-size:.86rem;color:var(--silver)}
+.slot{border:1px dashed var(--line);display:flex;flex-direction:column;justify-content:center;padding:clamp(28px,4vw,44px);color:var(--silver);font-size:.95rem}
+.slot svg{width:28px;height:28px;color:var(--gold);margin-bottom:18px}
+.slot b{color:var(--white);display:block;margin-bottom:6px;font-family:var(--display);font-stretch:110%;font-weight:600;font-size:1.1rem}
+
+/* Contact */
+.contact{background:var(--graphite);border-top:1px solid var(--hair)}
+.contact-grid{display:grid;grid-template-columns:1fr 1.05fr;gap:clamp(40px,6vw,96px);align-items:start}
+.contact-copy .h2{font-size:clamp(2.4rem,5vw,4.4rem)}
+.contact-copy .lead{margin:24px 0 40px}
+.details{list-style:none;margin:0;padding:0;border-top:1px solid var(--hair)}
+.details li{display:flex;gap:16px;align-items:flex-start;padding:18px 0;border-bottom:1px solid var(--hair)}
+.details svg{width:20px;height:20px;color:var(--gold);flex:none;margin-top:3px}
+.details a{color:var(--white);text-decoration:none;font-weight:600}
+.details a:hover{color:var(--gold-bright);text-decoration:underline;text-underline-offset:4px}
+.details span{color:var(--silver)}
+
+.form-panel{background:var(--midnight);border:1px solid var(--hair);border-top:2px solid var(--gold);padding:clamp(28px,4vw,48px);position:relative}
+.form-panel h3{font-family:var(--display);font-stretch:115%;font-weight:700;font-size:1.5rem;margin:0 0 6px}
+.form-panel > p{color:var(--silver);margin:0 0 30px;font-size:.93rem}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 18px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field.full{grid-column:1 / -1}
+.field label{font-size:.88rem;font-weight:600;color:var(--white)}
+.field label .req{color:var(--gold-ink)}
+.input{
+  width:100%;min-height:54px;padding:14px 16px;border-radius:2px;
+  background:var(--graphite);border:1px solid var(--metal-2);color:var(--white);
+  font:500 1rem var(--body);transition:border-color .2s,box-shadow .2s,background .2s;
+  -webkit-appearance:none;appearance:none;
+}
+.input::placeholder{color:var(--silver-dim)}
+.input:hover{border-color:#b3b9c3}
+.input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,110,.3);background:#fff}
+.input[aria-invalid="true"]{border-color:var(--danger)}
+select.input{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23cdb287' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:16px;padding-right:44px;cursor:pointer}
+select.input option{background:var(--graphite);color:var(--white)}
+input[type="date"].input{color-scheme:light;cursor:pointer}
+.err{min-height:1.1em;font-size:.82rem;color:var(--danger);margin:0}
+.form-submit{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.form-submit .btn{min-width:200px}
+.form-submit small{color:var(--silver-dim);font-size:.82rem;max-width:34ch}
+.success{display:none;text-align:left}
+.success.show{display:block;animation:fadeIn .5s var(--ease)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.success svg{width:52px;height:52px;color:var(--gold);margin-bottom:22px}
+.success h3{margin-bottom:12px}
+.success p{color:var(--silver);margin:0 0 10px}
+.success dl{display:grid;grid-template-columns:auto 1fr;gap:8px 18px;margin:22px 0 28px;padding:18px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);font-size:.93rem}
+.success dt{color:var(--silver-dim)}
+.success dd{margin:0;font-weight:600}
+
+/* Closing band */
+.closing{position:relative;overflow:hidden;background:var(--midnight)}
+.closing .wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center;padding-top:clamp(64px,8vw,110px);padding-bottom:clamp(64px,8vw,110px)}
+.closing h2{font-family:var(--display);font-stretch:116%;font-weight:700;font-size:clamp(1.8rem,3.6vw,3rem);line-height:1.08;margin:0}
+.closing h2 span{display:block;color:var(--silver);font-weight:500}
+.closing .frame{aspect-ratio:16/9;background:radial-gradient(60% 60% at 50% 60%,rgba(205,178,135,.14),transparent 70%)}
+.closing .frame img{object-fit:cover}
+
+/* Footer */
+.footer{color:var(--white);background:#e9ebef;border-top:1px solid var(--hair);padding:clamp(64px,8vw,96px) 0 calc(28px + env(safe-area-inset-bottom,0px))}
+.foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:48px}
+.foot-brand p{color:var(--silver);max-width:44ch;margin:24px 0 26px;font-size:.95rem}
+.socials{display:flex;gap:10px}
+.socials a{width:44px;height:44px;border:1px solid rgba(18,21,27,.18);background:#fff;display:flex;align-items:center;justify-content:center;border-radius:50%;color:var(--silver);transition:color .2s,border-color .2s}
+.socials a:hover{color:var(--gold);border-color:var(--gold)}
+.socials svg{width:18px;height:18px}
+.foot-col h2{font-family:var(--display);font-stretch:112%;font-weight:600;font-size:1rem;margin:6px 0 20px;color:var(--white)}
+.foot-col ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.foot-col a{color:var(--silver);text-decoration:none;display:inline-block;padding:6px 0;font-size:.95rem}
+.foot-col a:hover{color:var(--gold-bright)}
+.foot-bottom{margin-top:64px;padding-top:24px;border-top:1px solid var(--hair);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:var(--silver-dim);font-size:.84rem}
+.foot-bottom p{margin:0}
+.foot-bottom a{color:var(--silver)}
+
+/* Fleet dialog */
+dialog.van-dialog{
+  width:min(1040px,calc(100% - 32px));max-height:calc(100svh - 48px);padding:0;border:1px solid var(--hair);border-top:2px solid var(--gold);
+  background:var(--graphite);color:var(--white);overflow:auto;
+}
+dialog.van-dialog::backdrop{background:rgba(233,235,239,.85);backdrop-filter:blur(4px)}
+dialog.van-dialog[open]{animation:fadeIn .35s var(--ease)}
+.dlg-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;border-bottom:1px solid var(--hair);position:sticky;top:0;background:var(--graphite);z-index:2}
+.dlg-head h2{font-family:var(--display);font-stretch:118%;font-weight:700;font-size:1.4rem;margin:0}
+.dlg-stage{aspect-ratio:16/9;max-height:56svh;width:100%}
+.dlg-thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:4px}
+.dlg-thumbs button{padding:0;border:2px solid transparent;background:none;cursor:pointer;aspect-ratio:4/3;overflow:hidden}
+.dlg-thumbs button[aria-current="true"]{border-color:var(--gold)}
+.dlg-thumbs .frame{width:100%;height:100%}
+.dlg-body{padding:28px 24px 32px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+.dlg-body .features{margin:0}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width:1120px){
+  .nav-phone{display:none}
+}
+@media (max-width:1024px){
+  .nav{display:none}
+  .burger{display:inline-flex}
+  .intro,.contact-grid,.journey-head,.fleet-head,.closing .wrap{grid-template-columns:1fr}
+  .intro .frame{aspect-ratio:16/11}
+  .services{grid-template-columns:repeat(2,1fr)}
+  .vehicle,.vehicle.reverse{grid-template-columns:1fr}
+  .vehicle.reverse .v-media{order:0}
+  .v-media{min-height:0;aspect-ratio:16/11}
+  .benefit-row{grid-template-columns:1fr;gap:0}
+  .benefit,.benefit:first-child{padding:22px 0}
+  .benefit + .benefit{border-left:0;border-top:1px solid var(--line)}
+  .testi-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr}
+  .foot-brand{grid-column:1 / -1}
+}
+@media (max-width:860px){
+  .steps{grid-template-columns:1fr;gap:0}
+  .steps::before{left:27px;right:auto;top:0;bottom:0;width:1px;height:auto;background:linear-gradient(180deg,var(--gold),rgba(205,178,135,.15))}
+  .step{display:grid;grid-template-columns:54px 1fr;gap:0 22px;padding:0 0 40px}
+  .step:last-child{padding-bottom:0}
+  .step-num{margin:0;grid-row:1 / 3}
+  .step h3{margin-top:12px}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  :root{--header-h:68px}
+  .logo-mark{width:34px;height:34px}
+  .logo-word b{font-size:.9rem}
+  .hero-inner{padding-top:calc(var(--header-h) + 48px)}
+  .hero-ctas .btn{width:100%}
+  .hero-meta{margin-top:40px}
+  .hero::after{background:
+    linear-gradient(0deg,var(--midnight) 0%,rgba(242,243,245,.9) 55%,rgba(242,243,245,.72) 100%)}
+  .services{grid-template-columns:1fr}
+  .service{padding:28px 22px 30px}
+  .service svg{margin-bottom:24px}
+  .v-media{grid-template-columns:1fr 1fr;grid-template-rows:2fr 1fr;aspect-ratio:4/5}
+  .v-media .frame:first-child{grid-row:auto;grid-column:1 / 3}
+  .features{grid-template-columns:1fr}
+  .features li:nth-child(odd){padding-right:0}
+  .v-actions .btn{flex:1}
+  .form-grid{grid-template-columns:1fr}
+  .form-submit .btn{width:100%}
+  .foot-grid{grid-template-columns:1fr}
+  .dlg-body{grid-template-columns:1fr}
+  .trust .wrap{flex-direction:column;align-items:flex-start}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- Logo symbol: an N whose diagonal becomes a pulse waveform -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="np-mark" viewBox="0 0 48 48">
+      <rect x="1.5" y="1.5" width="45" height="45" rx="2" fill="none" stroke="currentColor" stroke-opacity=".28" stroke-width="1.5"/>
+      <path d="M12 36V12l8.5 12.5 3-5.5 4.2 11.5 2.6-4L36 36V12" fill="none" style="stroke:var(--gold)" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter"/>
+    </symbol>
+  </defs>
+</svg>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- paint: sky reflection on top, sharp horizon, dark ground reflection below -->
+    <linearGradient id="npPanel" x1="0" y1="40" x2="0" y2="256" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7d848f"/><stop offset=".08" stop-color="#3a3f47"/>
+      <stop offset=".26" stop-color="#16191e"/><stop offset=".55" stop-color="#2a2f37"/>
+      <stop offset=".63" stop-color="#7f8792"/><stop offset=".705" stop-color="#b7bdc5"/>
+      <stop offset=".712" stop-color="#15181c"/><stop offset=".82" stop-color="#0b0c0f"/>
+      <stop offset="1" stop-color="#23262c"/>
+    </linearGradient>
+    <linearGradient id="npSweep" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".3" stop-color="#fff" stop-opacity=".07"/>
+      <stop offset=".48" stop-color="#fff" stop-opacity=".2"/><stop offset=".56" stop-color="#fff" stop-opacity="0"/>
+      <stop offset=".8" stop-color="#fff" stop-opacity=".06"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="npGlass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8d98a8"/><stop offset=".22" stop-color="#3b4554"/>
+      <stop offset=".6" stop-color="#10151c"/><stop offset="1" stop-color="#040507"/>
+    </linearGradient>
+    <linearGradient id="npChrome" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f4f6f8"/><stop offset=".5" stop-color="#8b929c"/><stop offset="1" stop-color="#dfe3e8"/>
+    </linearGradient>
+    <linearGradient id="npTailG" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff6a55"/><stop offset=".5" stop-color="#b3150f"/><stop offset="1" stop-color="#5e0906"/>
+    </linearGradient>
+    <linearGradient id="npHead" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#9aa3ae"/><stop offset=".6" stop-color="#eef2f6"/><stop offset="1" stop-color="#fffaf0"/>
+    </linearGradient>
+    <linearGradient id="npTrim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9bfc7"/><stop offset=".5" stop-color="#5d636c"/><stop offset="1" stop-color="#8d939b"/></linearGradient>
+    <radialGradient id="npTire" cx=".5" cy=".5" r=".5">
+      <stop offset=".62" stop-color="#050607"/><stop offset=".8" stop-color="#22252a"/><stop offset=".93" stop-color="#121417"/><stop offset="1" stop-color="#050607"/>
+    </radialGradient>
+    <radialGradient id="npRim" cx=".42" cy=".36" r=".7">
+      <stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#c3c8cf"/><stop offset=".85" stop-color="#6b717a"/><stop offset="1" stop-color="#3a3e45"/>
+    </radialGradient>
+    <radialGradient id="npGlow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#fff8e6" stop-opacity=".95"/><stop offset=".3" stop-color="#f5ddaa" stop-opacity=".5"/><stop offset="1" stop-color="#f5ddaa" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="npTail" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ff3b2b" stop-opacity=".55"/><stop offset="1" stop-color="#ff3b2b" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="npBlur" x="-20%" y="-300%" width="140%" height="700%"><feGaussianBlur stdDeviation="10"/></filter>
+    <filter id="npSoft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+    <clipPath id="npBodyClip">
+      <path d="M90 254Q76 254 75 240L74 72Q75 44 104 42L546 38Q566 38 579 51L662 148Q694 156 724 166Q752 176 760 194L766 226Q767 252 748 254H660A58 58 0 0 0 544 254H240A58 58 0 0 0 124 254Z"/>
+    </clipPath>
+    <g id="npWheel">
+      <circle r="50" fill="url(#npTire)"/>
+      <circle r="47" fill="none" stroke="#2b2f35" stroke-width="1" stroke-dasharray="2 3"/>
+      <circle r="34" fill="#2a2d33"/>
+      <circle r="24" fill="none" stroke="#4a4f57" stroke-width="7" opacity=".7"/>
+      <circle r="33" fill="none" stroke="url(#npRim)" stroke-width="4"/>
+      <g fill="url(#npRim)">
+        <path d="M-2.6 -31h5.2l3 21h-11.2z"/><path d="M-2.6 -31h5.2l3 21h-11.2z" transform="rotate(36)"/>
+        <path d="M-2.6 -31h5.2l3 21h-11.2z" transform="rotate(72)"/><path d="M-2.6 -31h5.2l3 21h-11.2z" transform="rotate(108)"/>
+        <path d="M-2.6 -31h5.2l3 21h-11.2z" transform="rotate(144)"/><path d="M-2.6 -31h5.2l3 21h-11.2z" transform="rotate(180)"/>
+        <path d="M-2.6 -31h5.2l3 21h-11.2z" transform="rotate(216)"/><path d="M-2.6 -31h5.2l3 21h-11.2z" transform="rotate(252)"/>
+        <path d="M-2.6 -31h5.2l3 21h-11.2z" transform="rotate(288)"/><path d="M-2.6 -31h5.2l3 21h-11.2z" transform="rotate(324)"/>
+      </g>
+      <circle r="11" fill="url(#npRim)" stroke="#2a2d33" stroke-width="1.5"/>
+      <circle r="4.5" fill="#c9a96e"/>
+      <path d="M-30 -14A33 33 0 0 1 -6 -32" stroke="#fff" stroke-opacity=".6" stroke-width="2" fill="none"/>
+    </g>
+  </defs>
+  <symbol id="van-illus" viewBox="0 0 820 340">
+    <ellipse cx="420" cy="306" rx="370" ry="14" fill="#0b0d12" opacity=".5" filter="url(#npBlur)"/>
+    <ellipse cx="182" cy="306" rx="54" ry="5" fill="#000" opacity=".55" filter="url(#npSoft)"/>
+    <ellipse cx="602" cy="306" rx="54" ry="5" fill="#000" opacity=".55" filter="url(#npSoft)"/>
+    <circle cx="770" cy="200" r="70" fill="url(#npGlow)"/>
+    <circle cx="74" cy="132" r="40" fill="url(#npTail)"/>
+    <g clip-path="url(#npBodyClip)">
+      <rect x="60" y="30" width="720" height="230" fill="url(#npPanel)"/>
+      <rect x="60" y="30" width="720" height="230" fill="url(#npSweep)"/>
+      <path d="M60 44Q300 34 560 36L600 80H60Z" fill="#fff" opacity=".07"/>
+      <rect x="60" y="236" width="720" height="24" fill="#08090b"/>
+      <path d="M60 236H780" stroke="#3a3f47" stroke-width="1.2"/>
+      <path d="M60 170Q400 166 700 168" stroke="#fff" stroke-opacity=".18" stroke-width="1.4" fill="none"/>
+      <path d="M60 176H706" stroke="#c9a96e" stroke-width="1.8" opacity=".85"/>
+      <path d="M700 166Q730 172 758 190L766 230" stroke="#000" stroke-opacity=".5" stroke-width="2" fill="none"/>
+    </g>
+    <path d="M90 254Q76 254 75 240L74 72Q75 44 104 42L546 38Q566 38 579 51L662 148Q694 156 724 166Q752 176 760 194L766 226Q767 252 748 254H660A58 58 0 0 0 544 254H240A58 58 0 0 0 124 254Z" fill="none" stroke="#000" stroke-opacity=".6" stroke-width="1.5"/>
+    <path d="M124 254A58 58 0 0 1 240 254ZM544 254A58 58 0 0 1 660 254Z" fill="#030304"/>
+    <path d="M118 254A64 64 0 0 1 246 254M538 254A64 64 0 0 1 666 254" stroke="#0a0b0d" stroke-width="10" fill="none"/>
+    <path d="M118 254A64 64 0 0 1 246 254M538 254A64 64 0 0 1 666 254" stroke="#454a52" stroke-width="1" fill="none" transform="translate(0 -5)"/>
+    <rect x="105" y="85" width="428" height="70" rx="7" fill="url(#npTrim)"/>
+    <rect x="107" y="87" width="424" height="66" rx="6" fill="url(#npGlass)"/>
+    <path d="M545 85H577L638 155H545Z" fill="url(#npTrim)"/>
+    <path d="M547 87H576L634 153H547Z" fill="url(#npGlass)"/>
+    <path d="M150 87h70l-56 66h-70zM260 87h22l-56 66h-22zM380 87h60l-56 66h-60zM560 89l18 3-38 61h-12z" fill="#fff" opacity=".1"/>
+    <path d="M107 98H531" stroke="#fff" stroke-opacity=".08" stroke-width="10"/>
+    <rect x="222" y="86" width="8" height="68" fill="#07080a"/><rect x="336" y="86" width="8" height="68" fill="#07080a"/>
+    <rect x="448" y="86" width="8" height="68" fill="#07080a"/><rect x="534" y="84" width="10" height="72" fill="#07080a"/>
+    <path d="M318 160V236M466 160V236M540 160V236M660 160V232" stroke="#000" stroke-opacity=".7" stroke-width="1.4"/>
+    <path d="M319 160V236M467 160V236" stroke="#fff" stroke-opacity=".12" stroke-width="1"/>
+    <rect x="446" y="186" width="15" height="4.5" rx="2" fill="url(#npChrome)"/><rect x="520" y="186" width="15" height="4.5" rx="2" fill="url(#npChrome)"/>
+    <path d="M622 132q2-8 12-8h14q6 0 6 6v14q0 6-6 6h-20q-6 0-6-6z" fill="#0d0f12"/>
+    <path d="M626 130q2-4 8-4h12" stroke="#fff" stroke-opacity=".35" stroke-width="1.4" fill="none"/>
+    <path d="M640 150l6 4" stroke="#0d0f12" stroke-width="4"/>
+    <path d="M704 170Q736 174 757 191L753 199Q728 189 700 182Z" fill="url(#npHead)"/>
+    <path d="M712 176Q734 179 748 189" stroke="#c9a96e" stroke-width="1.6" fill="none"/>
+    <path d="M752 202L764 204L766 226L752 228Q748 214 752 202Z" fill="#060708"/>
+    <path d="M753 208H765M752 214H766M752 220H766" stroke="url(#npChrome)" stroke-width="1.4"/>
+    <path d="M700 236H762Q766 236 765 244L763 252H700Z" fill="#0b0c0e"/>
+    <circle cx="738" cy="244" r="4" fill="#fff6dc"/><circle cx="738" cy="244" r="12" fill="url(#npGlow)"/>
+    <rect x="71" y="88" width="9" height="78" rx="3" fill="url(#npTailG)"/>
+    <path d="M73 96v60" stroke="#ffb3a6" stroke-opacity=".7" stroke-width="1.2"/>
+    <rect x="72" y="234" width="40" height="20" rx="3" fill="#0b0c0e"/>
+    <rect x="326" y="252" width="134" height="7" rx="2" fill="#0d0e11"/>
+    <path d="M326 252H460" stroke="#4a4f57" stroke-width="1"/>
+    <use href="#npWheel" x="182" y="256"/><use href="#npWheel" x="602" y="256"/>
+  </symbol>
+</svg>
+
+<!-- ================= HEADER ================= -->
+<header class="site-header" id="siteHeader">
+  <div class="wrap nav-row">
+    <a href="#home" class="logo" aria-label="Nitro Pulse home">
+      <svg class="logo-mark" aria-hidden="true"><use href="#np-mark"/></svg>
+      <span class="logo-word"><b>NITRO PULSE</b></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <ul class="nav-list">
+        <li><a class="nav-link" href="#home" data-section="home">Home</a></li>
+        <li><a class="nav-link" href="#about" data-section="about">About</a></li>
+        <li class="has-sub" data-open="false">
+          <button class="nav-link" type="button" aria-expanded="false" aria-controls="fleetSub" data-section="fleet" id="fleetToggle">
+            Our Fleet
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <ul class="submenu" id="fleetSub">
+            <li><a href="#fleet">View full fleet</a></li>
+            <li><a href="#party-sprinter">Party Sprinter</a></li>
+            <li><a href="#executive-sprinter">Executive Sprinter</a></li>
+          </ul>
+        </li>
+        <li><a class="nav-link" href="#contact" data-section="contact">Contact</a></li>
+      </ul>
+      <a class="nav-phone" href="tel:+13475655943">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2"/></svg>
+        +1 (347) 565-5943
+      </a>
+      <a class="btn btn-gold" href="#contact" data-focus="type">Get Instant Pricing</a>
+    </nav>
+    <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu" id="burger"><span></span></button>
+  </div>
+</header>
+
+<!-- ================= MOBILE MENU ================= -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-modal="true" aria-label="Menu" aria-hidden="true">
+  <div class="nav-row">
+    <a href="#home" class="logo" aria-label="Nitro Pulse home" data-close>
+      <svg class="logo-mark" aria-hidden="true"><use href="#np-mark"/></svg>
+      <span class="logo-word"><b>NITRO PULSE</b></span>
+    </a>
+    <button class="close-btn" type="button" aria-label="Close menu" id="closeMenu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </div>
+  <ul class="m-list">
+    <li><a class="m-link" href="#home" data-close>Home</a></li>
+    <li><a class="m-link" href="#about" data-close>About</a></li>
+    <li>
+      <button class="m-link" type="button" aria-expanded="false" aria-controls="mFleet" id="mFleetToggle">
+        Our Fleet
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      </button>
+      <ul class="m-sub" id="mFleet">
+        <li><a href="#fleet" data-close>View full fleet</a></li>
+        <li><a href="#party-sprinter" data-close>Party Sprinter</a></li>
+        <li><a href="#executive-sprinter" data-close>Executive Sprinter</a></li>
+      </ul>
+    </li>
+    <li><a class="m-link" href="#contact" data-close>Contact</a></li>
+  </ul>
+  <div class="m-foot">
+    <a class="btn btn-ghost" href="tel:+13475655943">Call +1 (347) 565-5943</a>
+    <a class="btn btn-gold" href="#contact" data-close data-focus="type">Get Instant Pricing</a>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ================= A. HERO ================= -->
+<section class="hero" id="home" aria-labelledby="heroTitle">
+  <div class="hero-bg frame" data-fallback="">
+    <img src="https://images.pexels.com/photos/19871521/pexels-photo-19871521.jpeg?auto=compress&cs=tinysrgb&w=2000" alt="Black Mercedes-Benz Sprinter van parked among palm trees" fetchpriority="high">
+  </div>
+  <div class="wrap hero-inner">
+    <p class="locator"><span class="dot" aria-hidden="true"></span>Orange County, Los Angeles and San Diego</p>
+    <h1 class="display" id="heroTitle">Maybach-Inspired Luxury Sprinter Van Rentals in Orange County &amp; Los Angeles with Chauffeur</h1>
+    <svg class="pulse-line" viewBox="0 0 640 46" fill="none" aria-hidden="true" preserveAspectRatio="none">
+      <path d="M0 23H250l12-14 10 30 12-38 10 30 8-8h338" stroke="currentColor" stroke-width="1.6"/>
+    </svg>
+    <p class="lead">Get picked up anywhere in Southern California in a luxury Sprinter van always private, always professional, always on time.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-gold" href="#contact" data-focus="name">Reserve Your Sprinter Now</a>
+      <a class="btn btn-ghost" href="#contact" data-focus="type">Get Instant Pricing</a>
+    </div>
+    <div class="hero-meta">
+      <span>Call <a href="tel:+13475655943">+1 (347) 565-5943</a></span>
+      <span>Monday – Saturday: 9:00 AM – 5:00 PM</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= B. TRUST ================= -->
+<section class="trust" aria-label="Client trust">
+  <div class="wrap">
+    <div class="trust-l">
+      <img class="trust-avatars" src="https://deluxesprinters.com/wp-content/uploads/2025/06/Trusted-By-Logos.svg" alt="Photographs of satisfied customers" width="132" height="44">
+      <h2>Trusted by +500 clients in SoCal</h2>
+    </div>
+    <a class="text-link" href="#contact" data-focus="name">Book Now</a>
+  </div>
+</section>
+
+<!-- ================= C + D. ABOUT / SERVICES ================= -->
+<section class="section" id="about" aria-labelledby="aboutTitle">
+  <div class="wrap">
+    <div class="intro">
+      <figure class="intro-figure" style="margin:0">
+        <div class="frame" data-fallback="Executive Sprinter interior">
+          <img src="https://images.pexels.com/photos/39416591/pexels-photo-39416591.png?auto=compress&cs=tinysrgb&w=1400" alt="Black luxury van with doors open, showing a VIP leather cabin" loading="lazy">
+        </div>
+      </figure>
+      <div class="intro-copy">
+        <p class="kicker">Driven by Excellence</p>
+        <h2 class="h2" id="aboutTitle">Group Travel</h2>
+        <p class="h3">Reimagined for Luxury and Ease</p>
+        <p class="lead">Choose your perfect ride experience, all tailored for comfort, style, and convenience</p>
+      </div>
+    </div>
+
+    <div class="services" role="list">
+      <article class="service" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 20l5-13 8 8-13 5z"/><path d="M14 4c1 1 1 2 0 3M18 8c1-1 2-1 3 0M16 3l.5 1.5M20 7.5L21.5 8M13 11l3-3"/></svg>
+        <h3>Nightlife &amp; Party</h3>
+        <p>Celebrate in style</p>
+      </article>
+      <article class="service" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V5a1 1 0 011-1h6a1 1 0 011 1v2M3 13h18M11 13v2h2v-2"/></svg>
+        <h3>Executive Travel</h3>
+        <p>Professional and discreet</p>
+      </article>
+      <article class="service" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="15" r="6"/><path d="M9.5 6L8 3.5h8L14.5 6 12 9z"/></svg>
+        <h3>Weddings &amp; Events</h3>
+        <p>Elegant and timely</p>
+      </article>
+      <article class="service" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 13l4-1 4-7h2l-1 6 6-1 2-3h1.5l-1 4.5 1 4.5H20l-2-3-6-1 1 6h-2l-4-7-4-1z"/></svg>
+        <h3>Airport Transfers</h3>
+        <p>Always on time</p>
+      </article>
+      <article class="service" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2 16V8a2 2 0 012-2h11c1.2 0 2 .4 2.8 1.2L21 11c.7.4 1 1 1 2v3H2z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M2 11h19M8 6v5M13 6v5"/></svg>
+        <h3>Day Trips &amp; Tours</h3>
+        <p>Explore SoCal</p>
+      </article>
+      <article class="service" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H16a3 3 0 000-6H8a3 3 0 010-6h7.5"/></svg>
+        <h3>Custom Travel Plans</h3>
+        <p>Tailored rides</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= E. BENEFITS ================= -->
+<section class="section-tight benefits" aria-label="Benefits">
+  <div class="wrap benefit-row">
+    <div class="benefit">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.2"/><path d="M3.5 10.5l6.4 1M14.1 11.5l6.4-1M12 14.2V21"/></svg>
+      <h3>Professionally chauffeured, always on time</h3>
+    </div>
+    <div class="benefit">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M7 3h6a2 2 0 012 2v8H7z"/><path d="M5 13h13a2 2 0 012 2v2H5zM7 17v4M18 17v4"/></svg>
+      <h3>Executive and party-ready interiors</h3>
+    </div>
+    <div class="benefit">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M9 8h6M9 12h6M9 16h3"/></svg>
+      <h3>Transparent pricing, no hidden fees</h3>
+    </div>
+  </div>
+</section>
+
+<!-- ================= F. JOURNEY ================= -->
+<section class="section" id="journey" aria-labelledby="journeyTitle">
+  <div class="wrap">
+    <div class="journey-head">
+      <div>
+        <p class="kicker">Effortless Travel</p>
+        <h2 class="h2" id="journeyTitle">Seamless from Booking to Drop-off</h2>
+      </div>
+      <p class="lead">We’ve made luxury group travel simple and stress-free. From selecting your van to arriving, every step is smooth and stylish.</p>
+    </div>
+    <ol class="steps">
+      <li class="step">
+        <span class="step-num">1</span>
+        <h3>Choose Your Van</h3>
+        <p>Executive or Party-ready? Pick the vibe that fits your occasion.</p>
+      </li>
+      <li class="step">
+        <span class="step-num">2</span>
+        <h3>Book Instantly</h3>
+        <p>Call or fill out a quick form. Confirmation in minutes.</p>
+      </li>
+      <li class="step">
+        <span class="step-num">3</span>
+        <h3>Ride in Style</h3>
+        <p>Your luxury ride shows up on time with a pro chauffeur.</p>
+      </li>
+      <li class="step">
+        <span class="step-num">4</span>
+        <h3>Enjoy the Moment</h3>
+        <p>Privacy, comfort, and upscale features. guaranteed.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================= G. FLEET ================= -->
+<section class="section" id="fleet" aria-labelledby="fleetTitle" style="padding-top:0">
+  <div class="wrap">
+    <div class="fleet-head">
+      <div>
+        <p class="kicker">EXPLORE OUR FLEET</p>
+        <h2 class="h2" id="fleetTitle">Executive or Party?</h2>
+        <p class="h3">You Deserve the Best of Both Worlds.</p>
+      </div>
+      <div class="fleet-head-r">
+        <p>Whether you’re closing deals or raising glasses — we have the perfect ride.</p>
+        <a class="btn btn-gold" href="#contact" data-focus="type">Lock In Your Ride</a>
+      </div>
+    </div>
+
+    <!-- Executive -->
+    <article class="vehicle" id="executive-sprinter" aria-labelledby="execTitle">
+      <div class="v-media">
+        <div class="frame" data-fallback="Executive Sprinter">
+          <img src="https://images.pexels.com/photos/39416604/pexels-photo-39416604.png?auto=compress&cs=tinysrgb&w=1600" alt="Executive van cabin in black with comfortable leather seating" loading="lazy">
+        </div>
+        <div class="frame" data-fallback="Executive Sprinter detail">
+          <img src="https://images.pexels.com/photos/39416592/pexels-photo-39416592.png?auto=compress&cs=tinysrgb&w=900" alt="Rows of leather seats in a premium passenger van" loading="lazy">
+        </div>
+        <div class="frame" data-fallback="Executive Sprinter detail">
+          <img src="https://images.pexels.com/photos/17455632/pexels-photo-17455632.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Leather passenger seats in a luxury Mercedes van" loading="lazy">
+        </div>
+      </div>
+      <div class="v-body">
+        <span class="v-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V5a1 1 0 011-1h6a1 1 0 011 1v2M3 13h18"/></svg>
+          For business and airport travel
+        </span>
+        <h3 id="execTitle">Executive Sprinter</h3>
+        <p>Experience luxury on the move with our <a href="https://deluxesprinters.com/luxury-executive-sprinter-van-los-angeles/" target="_blank" rel="noopener">Executive Sprinter in Los Angeles</a>, <strong>San Diego</strong> and <strong>Orange County</strong>. Designed for corporate travel, airport transfers, and client experiences. These executive sprinter van rental is perfect for nightlife, birthdays, and bachelorette parties.</p>
+        <ul class="features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>Perfect for business</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>Lux leather chairs</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>Quiet cabin</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>Built-in WiFi</li>
+        </ul>
+        <div class="v-actions">
+          <button class="btn btn-gold" type="button" data-van="executive">See Inside</button>
+          <a class="btn btn-ghost" href="#contact" data-preselect="Executive Sprinter">Get Instant Pricing</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Party -->
+    <article class="vehicle reverse party" id="party-sprinter" aria-labelledby="partyTitle">
+      <div class="v-media">
+        <div class="frame" data-fallback="Party Sprinter">
+          <img src="https://images.pexels.com/photos/39416609/pexels-photo-39416609.png?auto=compress&cs=tinysrgb&w=1600" alt="Luxury van interior with a built-in entertainment system and speakers" loading="lazy">
+        </div>
+        <div class="frame" data-fallback="Party Sprinter detail">
+          <img src="https://images.pexels.com/photos/39416598/pexels-photo-39416598.png?auto=compress&cs=tinysrgb&w=900" alt="Plush black leather seating in a luxury van" loading="lazy">
+        </div>
+        <div class="frame" data-fallback="Party Sprinter detail">
+          <img src="https://images.pexels.com/photos/17455633/pexels-photo-17455633.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Black Mercedes van on a city street with its side door open" loading="lazy">
+        </div>
+      </div>
+      <div class="v-body">
+        <span class="v-tag">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 20l5-13 8 8-13 5z"/><path d="M14 4c1 1 1 2 0 3M18 8c1-1 2-1 3 0M13 11l3-3"/></svg>
+          For nights out and celebrations
+        </span>
+        <h3 id="partyTitle">Party Sprinter</h3>
+        <p>Our <a href="https://deluxesprinters.com/luxury-party-sprinter-van-los-angeles/" target="_blank" rel="noopener">Party Sprinter</a>, available in Los Angeles, Orange County, and San Diego, is the perfect choice for nightlife, birthdays, and bachelorette parties — offering LED lighting, vibrant music, and a luxurious atmosphere to celebrate in style.</p>
+        <ul class="features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>LED lights</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>Built-in cooler/bar area</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>Limo seating</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>Great for birthdays</li>
+        </ul>
+        <div class="v-actions">
+          <button class="btn btn-gold" type="button" data-van="party">See Inside</button>
+          <a class="btn btn-ghost" href="#contact" data-preselect="Party Sprinter">Get Instant Pricing</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= H. TESTIMONIALS ================= -->
+<section class="section" id="testimonials" aria-labelledby="testiTitle" style="padding-top:0">
+  <div class="wrap">
+    <div class="testi-head">
+      <p class="kicker">Feedback That Drives Us</p>
+      <h2 class="h2" id="testiTitle">What Our Riders Say</h2>
+      <p class="lead" style="margin-top:20px">We’re proud to deliver five-star service—from the first mile to the last. See what riders say about their experience with our luxury transport.</p>
+    </div>
+    <div class="testi-grid">
+      <figure class="quote-card" style="margin:0">
+        <span class="qmark" aria-hidden="true">“</span>
+        <span class="placeholder-badge">Placeholder, not a customer review</span>
+        <blockquote>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</blockquote>
+        <figcaption class="rider">
+          <span class="rider-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="9" r="3.5"/><path d="M5.5 19a7 7 0 0113 0"/></svg></span>
+          <span><b>Anna</b><span>Salt Lake City</span></span>
+        </figcaption>
+        <p class="quote-note">The current website shows sample text in this slot. Replace with a verified rider review and its attribution before launch.</p>
+      </figure>
+      <div class="slot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        <b>Space for additional rider reviews</b>
+        Cards here are designed to hold real quotes, names and locations as they are collected.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= I. CONTACT ================= -->
+<section class="section contact" id="contact" aria-labelledby="contactTitle">
+  <div class="wrap contact-grid">
+    <div class="contact-copy">
+      <p class="kicker">CONTACT US</p>
+      <h2 class="h2" id="contactTitle">Your Experience Begins Here</h2>
+      <p class="lead">Fill out the form and tell us about your event, we’ll match you with the perfect ride. Whether it’s a wedding, executive trip, or night out, every detail is handled with premium care.</p>
+      <ul class="details">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=85+Argonaut+Ste+115+Aliso+Viejo+California+92656" target="_blank" rel="noopener">85 Argonaut Ste 115 Aliso Viejo, California 92656</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2"/></svg>
+          <a href="tel:+13475655943">+1 (347) 565-5943</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 6 9-6"/></svg>
+          <a href="mailto:nitropulseofficials@gmail.com">nitropulseofficials@gmail.com</a>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          <span>Monday – Saturday: 9:00 AM – 5:00 PM</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="form-panel" id="quote">
+      <form id="quoteForm" novalidate aria-labelledby="formTitle">
+        <h3 id="formTitle">Get Instant Pricing</h3>
+        <p>Fields marked <span style="color:var(--gold-ink)">*</span> are required.</p>
+        <div class="form-grid">
+          <div class="field full">
+            <label for="name">Name <span class="req" aria-hidden="true">*</span></label>
+            <input class="input" id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-err" placeholder="Your full name">
+            <p class="err" id="name-err" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="email">Email <span class="req" aria-hidden="true">*</span></label>
+            <input class="input" id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-err" placeholder="you@example.com">
+            <p class="err" id="email-err" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="phone">Phone <span class="req" aria-hidden="true">*</span></label>
+            <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required aria-describedby="phone-err" placeholder="(000) 000-0000">
+            <p class="err" id="phone-err" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="type">Type of event <span class="req" aria-hidden="true">*</span></label>
+            <select class="input" id="type" name="type" required aria-describedby="type-err">
+              <option value="">Select your event</option>
+              <option>Executive Sprinter</option>
+              <option>Party Sprinter</option>
+              <option>Airport Transport</option>
+            </select>
+            <p class="err" id="type-err" aria-live="polite"></p>
+          </div>
+          <div class="field">
+            <label for="date">Event Date <span class="req" aria-hidden="true">*</span></label>
+            <input class="input" id="date" name="date" type="date" required aria-describedby="date-err">
+            <p class="err" id="date-err" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="form-submit">
+          <button class="btn btn-gold" type="submit">Get My Quote</button>
+          <small>Design demo: this form checks your details in the browser but does not send them anywhere.</small>
+        </div>
+      </form>
+
+      <div class="success" id="successBox" role="status" tabindex="-1">
+        <svg viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/></svg>
+        <h3 class="h3" style="color:var(--white);font-weight:700;font-stretch:115%">Quote request ready</h3>
+        <p>Thanks, <span id="sName"></span>. Here’s what you entered. In this design demo nothing has been sent; on the live site this would go to the team for a quote.</p>
+        <dl>
+          <dt>Email</dt><dd id="sEmail"></dd>
+          <dt>Phone</dt><dd id="sPhone"></dd>
+          <dt>Type of event</dt><dd id="sType"></dd>
+          <dt>Event Date</dt><dd id="sDate"></dd>
+        </dl>
+        <button class="btn btn-ghost" type="button" id="resetForm">Start a new quote</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Closing band (from original page) -->
+<section class="closing" aria-label="Closing">
+  <div class="wrap">
+    <h2>Whether for a meeting or a bachelor party, <span>our team ensures the journey matches.</span></h2>
+    <div class="frame" data-fallback="Front view of a black Mercedes-Benz Sprinter van">
+      <img src="https://images.pexels.com/photos/19871522/pexels-photo-19871522.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Black Mercedes-Benz Sprinter van in front of a modern building" loading="lazy">
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= J. FOOTER ================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a href="#home" class="logo" aria-label="Nitro Pulse home">
+          <svg class="logo-mark" aria-hidden="true"><use href="#np-mark"/></svg>
+          <span class="logo-word"><b>NITRO PULSE</b></span>
+        </a>
+        <p>Fill out the form and tell us about your event, we’ll match you with the perfect ride. Whether it’s a wedding, executive trip, or night out, every detail is handled with premium care.</p>
+        <div class="socials">
+          <a href="https://www.instagram.com/deluxesprinters/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor"/></svg>
+          </a>
+          <a href="https://www.facebook.com/people/Deluxe-Sprinters/61574292583627/" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M14 8h3V4h-3a4 4 0 00-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h2>Sections</h2>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#fleet">Our Fleet</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h2>Quick Links</h2>
+        <ul>
+          <li><a href="https://deluxesprinters.com/privacy-policy/" target="_blank" rel="noopener">Privacy Policy</a></li>
+          <li><a href="https://deluxesprinters.com/terms-conditions/" target="_blank" rel="noopener">Terms and Conditions</a></li>
+          <li><a href="tel:+13475655943">+1 (347) 565-5943</a></li>
+          <li><a href="mailto:nitropulseofficials@gmail.com">nitropulseofficials@gmail.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <p>Copyright © 2026 Nitro Pulse. All Rights Reserved.</p>
+      <p>Website redesign concept. Demo photos from <a href="https://www.pexels.com/license/" target="_blank" rel="noopener">Pexels</a> (free license). Privacy Policy and Terms and Conditions open the current live pages.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Fleet details overlay -->
+<dialog class="van-dialog" id="vanDialog" aria-labelledby="dlgTitle">
+  <div class="dlg-head">
+    <h2 id="dlgTitle">Sprinter</h2>
+    <button class="close-btn" type="button" id="dlgClose" aria-label="Close details">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+    </button>
+  </div>
+  <div class="frame dlg-stage" id="dlgStage" data-fallback="">
+    <img id="dlgImg" src="" alt="">
+  </div>
+  <div class="dlg-thumbs" id="dlgThumbs"></div>
+  <div class="dlg-body">
+    <ul class="features" id="dlgFeatures"></ul>
+    <a class="btn btn-gold" href="#contact" id="dlgCta">Get Instant Pricing</a>
+  </div>
+</dialog>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(s, c){ return (c || document).querySelector(s); };
+  var $$ = function(s, c){ return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  /* ---------- Image fallback ---------- */
+  var SVGNS = "http://www.w3.org/2000/svg";
+  function addArt(host){
+    if (!host.classList.contains("frame") || host.querySelector(".van-art")) return;
+    var svg = document.createElementNS(SVGNS, "svg");
+    svg.setAttribute("class", "van-art"); svg.setAttribute("viewBox", "0 0 820 340"); svg.setAttribute("aria-hidden", "true");
+    var use = document.createElementNS(SVGNS, "use");
+    use.setAttribute("href", "#van-illus");
+    svg.appendChild(use); host.appendChild(svg);
+  }
+  function markFailed(img){
+    var host = img.closest(".frame") || img;
+    addArt(host);
+    host.classList.add("img-failed");
+  }
+  function watchImg(img){
+    if (img.complete && img.naturalWidth === 0 && img.getAttribute("src")) markFailed(img);
+    img.addEventListener("error", function(){ markFailed(img); });
+    img.addEventListener("load", function(){ (img.closest(".frame") || img).classList.remove("img-failed"); });
+  }
+  $$("img").forEach(watchImg);
+
+  /* ---------- Sticky header ---------- */
+  var header = $("#siteHeader");
+  function onScroll(){ header.classList.toggle("scrolled", window.scrollY > 24); }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- Desktop fleet dropdown ---------- */
+  var sub = $(".has-sub"), fleetToggle = $("#fleetToggle");
+  function setSub(open){
+    sub.setAttribute("data-open", open ? "true" : "false");
+    fleetToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  }
+  fleetToggle.addEventListener("click", function(e){
+    e.stopPropagation();
+    setSub(sub.getAttribute("data-open") !== "true");
+  });
+  sub.addEventListener("mouseenter", function(){ if (window.matchMedia("(hover:hover)").matches) setSub(true); });
+  sub.addEventListener("mouseleave", function(){ if (window.matchMedia("(hover:hover)").matches) setSub(false); });
+  sub.addEventListener("focusout", function(e){ if (!sub.contains(e.relatedTarget)) setSub(false); });
+  document.addEventListener("click", function(e){ if (!sub.contains(e.target)) setSub(false); });
+  $$(".submenu a").forEach(function(a){ a.addEventListener("click", function(){ setSub(false); }); });
+
+  /* ---------- Mobile menu ---------- */
+  var menu = $("#mobileMenu"), burger = $("#burger"), closeBtn = $("#closeMenu");
+  function openMenu(){
+    menu.classList.add("open"); menu.setAttribute("aria-hidden","false");
+    burger.setAttribute("aria-expanded","true"); document.body.classList.add("menu-open");
+    setTimeout(function(){ closeBtn.focus(); }, 50);
+  }
+  function closeMenu(returnFocus){
+    menu.classList.remove("open"); menu.setAttribute("aria-hidden","true");
+    burger.setAttribute("aria-expanded","false"); document.body.classList.remove("menu-open");
+    if (returnFocus) burger.focus();
+  }
+  burger.addEventListener("click", openMenu);
+  closeBtn.addEventListener("click", function(){ closeMenu(true); });
+  $$("[data-close]", menu).forEach(function(a){ a.addEventListener("click", function(){ closeMenu(false); }); });
+  var mToggle = $("#mFleetToggle"), mSub = $("#mFleet");
+  mToggle.addEventListener("click", function(){
+    var open = mToggle.getAttribute("aria-expanded") !== "true";
+    mToggle.setAttribute("aria-expanded", open ? "true" : "false");
+    mSub.classList.toggle("open", open);
+  });
+  document.addEventListener("keydown", function(e){
+    if (e.key !== "Escape") return;
+    if (menu.classList.contains("open")) closeMenu(true);
+    setSub(false);
+  });
+  // keep focus inside the open mobile menu
+  menu.addEventListener("keydown", function(e){
+    if (e.key !== "Tab") return;
+    var f = $$("a,button", menu).filter(function(el){ return el.offsetParent !== null; });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  });
+  window.addEventListener("resize", function(){ if (window.innerWidth > 1024 && menu.classList.contains("open")) closeMenu(false); });
+
+  /* ---------- CTA focus + preselect ---------- */
+  var typeSel = $("#type");
+  function focusField(id){
+    var el = document.getElementById(id);
+    if (!el) return;
+    setTimeout(function(){ el.focus({ preventScroll: true }); }, 650);
+  }
+  $$("[data-focus]").forEach(function(a){
+    a.addEventListener("click", function(){ showForm(); focusField(a.getAttribute("data-focus")); });
+  });
+  $$("[data-preselect]").forEach(function(a){
+    a.addEventListener("click", function(){
+      showForm();
+      typeSel.value = a.getAttribute("data-preselect");
+      clearError(typeSel);
+      focusField("name");
+    });
+  });
+
+  /* ---------- Active nav state ---------- */
+  var navMap = { home:"home", about:"about", journey:"about", fleet:"fleet", testimonials:"fleet", contact:"contact" };
+  if ("IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        var key = navMap[en.target.id];
+        $$(".nav-link[data-section]").forEach(function(l){ l.classList.toggle("active", l.getAttribute("data-section") === key); });
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    Object.keys(navMap).forEach(function(id){ var s = document.getElementById(id); if (s) io.observe(s); });
+  }
+
+  /* ---------- Fleet overlay ---------- */
+  var vans = {
+    executive: {
+      title: "Executive Sprinter",
+      type: "Executive Sprinter",
+      features: ["Perfect for business","Lux leather chairs","Quiet cabin","Built-in WiFi"],
+      images: [
+        ["https://images.pexels.com/photos/19871522/pexels-photo-19871522.jpeg?auto=compress&cs=tinysrgb&w=1600","Black Mercedes-Benz Sprinter exterior"],
+        ["https://images.pexels.com/photos/39416604/pexels-photo-39416604.png?auto=compress&cs=tinysrgb&w=1600","Executive cabin with black leather seating"],
+        ["https://images.pexels.com/photos/39416592/pexels-photo-39416592.png?auto=compress&cs=tinysrgb&w=1600","Rows of leather seats"],
+        ["https://images.pexels.com/photos/28145274/pexels-photo-28145274.jpeg?auto=compress&cs=tinysrgb&w=1600","Black van on an airport apron"]
+      ]
+    },
+    party: {
+      title: "Party Sprinter",
+      type: "Party Sprinter",
+      features: ["LED lights","Built-in cooler/bar area","Limo seating","Great for birthdays"],
+      images: [
+        ["https://images.pexels.com/photos/39416609/pexels-photo-39416609.png?auto=compress&cs=tinysrgb&w=1600","Interior with built-in entertainment system and speakers"],
+        ["https://images.pexels.com/photos/39416598/pexels-photo-39416598.png?auto=compress&cs=tinysrgb&w=1600","Plush black leather seating"],
+        ["https://images.pexels.com/photos/17455633/pexels-photo-17455633.jpeg?auto=compress&cs=tinysrgb&w=1600","Black Mercedes van on a city street"],
+        ["https://images.pexels.com/photos/17455630/pexels-photo-17455630.jpeg?auto=compress&cs=tinysrgb&w=1600","Black luxury van at night in the city"]
+      ]
+    }
+  };
+  var dlg = $("#vanDialog"), dlgImg = $("#dlgImg"), dlgStage = $("#dlgStage"), thumbs = $("#dlgThumbs"), dlgCta = $("#dlgCta");
+  var check = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>';
+  var currentVan = null, opener = null;
+  watchImg(dlgImg);
+
+  function showImage(i){
+    var im = currentVan.images[i];
+    dlgStage.classList.remove("img-failed");
+    dlgStage.setAttribute("data-fallback", im[1]);
+    dlgImg.src = im[0]; dlgImg.alt = im[1];
+    $$("button", thumbs).forEach(function(b, j){ b.setAttribute("aria-current", j === i ? "true" : "false"); });
+  }
+  function openVan(key, btn){
+    currentVan = vans[key]; opener = btn;
+    $("#dlgTitle").textContent = currentVan.title;
+    $("#dlgFeatures").innerHTML = currentVan.features.map(function(f){ return "<li>" + check + f + "</li>"; }).join("");
+    thumbs.innerHTML = currentVan.images.map(function(im, i){
+      return '<button type="button" aria-label="Show photo ' + (i + 1) + ': ' + im[1] + '"><span class="frame" data-fallback=""><img src="' + im[0] + '" alt="" loading="lazy"></span></button>';
+    }).join("");
+    $$("img", thumbs).forEach(watchImg);
+    $$("button", thumbs).forEach(function(b, i){ b.addEventListener("click", function(){ showImage(i); }); });
+    showImage(0);
+    if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+    document.body.classList.add("menu-open");
+  }
+  function closeVan(){
+    if (typeof dlg.close === "function") dlg.close(); else dlg.removeAttribute("open");
+  }
+  dlg.addEventListener("close", function(){ document.body.classList.remove("menu-open"); if (opener) opener.focus(); });
+  dlg.addEventListener("click", function(e){ if (e.target === dlg) closeVan(); });
+  $("#dlgClose").addEventListener("click", closeVan);
+  $$("[data-van]").forEach(function(b){ b.addEventListener("click", function(){ openVan(b.getAttribute("data-van"), b); }); });
+  dlgCta.addEventListener("click", function(){
+    opener = null;
+    var t = currentVan ? currentVan.type : "";
+    closeVan(); showForm();
+    typeSel.value = t; clearError(typeSel);
+    focusField("name");
+  });
+
+  /* ---------- Form ---------- */
+  var form = $("#quoteForm"), success = $("#successBox"), dateIn = $("#date");
+  var today = new Date(); today.setMinutes(today.getMinutes() - today.getTimezoneOffset());
+  var todayStr = today.toISOString().slice(0, 10);
+  dateIn.min = todayStr;
+
+  function setError(el, msg){
+    el.setAttribute("aria-invalid", "true");
+    document.getElementById(el.id + "-err").textContent = msg;
+  }
+  function clearError(el){
+    el.removeAttribute("aria-invalid");
+    var e = document.getElementById(el.id + "-err"); if (e) e.textContent = "";
+  }
+  function validate(el){
+    var v = el.value.trim();
+    switch (el.id){
+      case "name":
+        if (v.length < 2) return "Enter your name.";
+        break;
+      case "email":
+        if (!v) return "Enter your email address.";
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) return "Enter an email like name@example.com.";
+        break;
+      case "phone":
+        var digits = v.replace(/\D/g, "");
+        if (!v) return "Enter a phone number.";
+        if (digits.length < 10 || digits.length > 15) return "Enter a phone number with at least 10 digits.";
+        break;
+      case "type":
+        if (!v) return "Select the type of event.";
+        break;
+      case "date":
+        if (!v) return "Choose your event date.";
+        if (v < todayStr) return "Choose today or a future date.";
+        break;
+    }
+    return "";
+  }
+  var fields = ["name","email","phone","type","date"].map(function(id){ return document.getElementById(id); });
+  fields.forEach(function(el){
+    el.addEventListener("blur", function(){ if (el.value.trim()) { var m = validate(el); m ? setError(el, m) : clearError(el); } });
+    el.addEventListener("input", function(){ if (el.getAttribute("aria-invalid") === "true" && !validate(el)) clearError(el); });
+    el.addEventListener("change", function(){ if (el.getAttribute("aria-invalid") === "true" && !validate(el)) clearError(el); });
+  });
+  form.addEventListener("submit", function(e){
+    e.preventDefault();
+    var firstBad = null;
+    fields.forEach(function(el){
+      var m = validate(el);
+      if (m){ setError(el, m); if (!firstBad) firstBad = el; } else clearError(el);
+    });
+    if (firstBad){ firstBad.focus(); return; }
+    var d = new Date(dateIn.value + "T12:00:00");
+    $("#sName").textContent = $("#name").value.trim().split(" ")[0];
+    $("#sEmail").textContent = $("#email").value.trim();
+    $("#sPhone").textContent = $("#phone").value.trim();
+    $("#sType").textContent = typeSel.value;
+    $("#sDate").textContent = d.toLocaleDateString("en-US", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
+    form.hidden = true;
+    success.classList.add("show");
+    success.focus();
+  });
+  function showForm(){
+    if (!form.hidden) return;
+    form.hidden = false; success.classList.remove("show");
+  }
+  $("#resetForm").addEventListener("click", function(){
+    form.reset(); fields.forEach(clearError); showForm(); $("#name").focus();
+  });
+})();
+</script>
+</body>
+</html>
